@@ -372,7 +372,7 @@ class UpNextPopupHandler(object):
     def cancel(self):
         self.stop()
 
-    def start(self):
+    def start(self, next_item=None):
         # Exit if popuphandler previously requested
         if self._running.is_set():
             return False
@@ -380,7 +380,6 @@ class UpNextPopupHandler(object):
         self.log('Started')
         self._running.set()
 
-        next_item = None
         player = self.player
         state = self.state
         while True:

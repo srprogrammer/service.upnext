@@ -604,7 +604,16 @@ def get_playlist_position(offset=0):
     if playlistid is None:
         return None, None
 
-    playlist = xbmc.PlayList(playlistid)
+    try:
+        playlist = xbmc.PlayList(playlistid)
+    except RuntimeError as error:
+        # Kodi raises "PlayList does not exist" when ther is no active
+        # playlist, which is valid for library playback and popup tests.
+        log('Unable to access playlist {0}: {1}'.format(
+            playlistid, error
+        ), utils.LOGWARNING)
+        return None, None
+
     position = playlist.getposition()
     # PlayList().getposition() starts from zero unless playlist not active
     if position < 0:

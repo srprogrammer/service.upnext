@@ -76,7 +76,7 @@ def test_popup(popup_type='upnext', simple_style=False):
     # Create a test popuphandler and create an actual popup for testing
     has_next_item = popuphandler.UpNextPopupHandler(
         player=test_player, state=test_state
-    ).start()
+    ).start(next_item=test_state.next_item)
 
     return has_next_item
 
