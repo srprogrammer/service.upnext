@@ -517,6 +517,13 @@ class UpNextState(object):  # pylint: disable=too-many-public-methods
 
         from tmdb_helper import TMDb, get_item_details, get_next_episodes
 
+        if not getattr(TMDb, 'is_initialised', lambda: False)():
+            utils.log(
+                'TMDB Helper fallback unavailable. Skipping plugin-stream lookup',
+                utils.LOGWARNING
+            )
+            return None
+
         utils.log('Getting TMDB now playing: title={0}, season={1}, episode={2}'.format(
             title, season, episode), name='UpNextState', level=utils.LOGINFO)
 
